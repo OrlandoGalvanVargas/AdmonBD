@@ -1,12 +1,11 @@
-# Creaci贸n de Base de datos
+-- Creaci髇 de una base de datos
 
-```sql
 create database paquitabd
 on primary 
 (
  Name = paquitabdData, filename = 'C:\DataNueva\paquitabd.mdf'
- ,size = 50MB -- EL tama帽o minimo es de 512kb, el predeterminado es 1MB
- ,filegrowth=25% --El default es 10%
+ ,size = 50MB -- EL tama駉 minimo es de 512kb, el predeterminado es 1MB
+ ,filegrowth=25% --El default es 10%, El minimo es de 64KB
  ,maxsize = 400MB
  
 )
@@ -29,20 +28,19 @@ ADD FILE
 
 )TO FILEGROUP[PRIMARY];
 
--- Creaci贸n de un filegroup adicional
+-- Creaci髇 de un filegroup adicional
 
 ALTER DATABASE paquitabd
 ADD FILEGROUP SECUNDARIO
 GO 
 
--- Creaci贸n de un archivo asociado al filegroup
+-- Creaci髇 de un archivo asociado al filegroup
 
 ALTER DATABASE paquitabd
 ADD FILE (
 	NAME = 'paquitabd_parte1',
 	FILENAME = 'C:\DataNueva\paquitabd_SECUNDARIO.ndf'
 )TO FILEGROUP SECUNDARIO
-
 
 -- Crear una tabla en el grupo de archivos (filegroups) Secundario
 
@@ -88,18 +86,17 @@ CREATE TABLE comparadocontigo(
 	UNIQUE(nombredelbicho)
 )
 
-
--- Revision del estado de la opci贸n de ajuste automatico del tama帽o de archivos
+-- Revision del estado de la opci髇 de ajuste automatico del tama駉 de archivos
 
 SELECT DATABASEPROPERTYEX('paquitabd', 'ISAUTOSHRINK')
 
--- Cambia la opci贸n de AutoShrink a True
+-- Cambia la opci髇 de AutoShrink a True
 ALTER DATABASE paquitabd
 SET AUTO_SHRINK ON WITH NO_WAIT
 GO
 
 
--- Revisi贸n del estado de la opci贸n de creaci贸n de estadisticas
+-- Revisi髇 del estado de la opci髇 de creaci髇 de estadisticas
 
 SELECT DATABASEPROPERTYEX('paquitabd', 'ISAUTOCREATESTATISTICS')
 
@@ -108,15 +105,13 @@ SET AUTO_CREATE_STATISTICS ON
 GO
 
 
-
--- Consultar informaci贸n de la base de datos
+-- Consultar informaci髇 de la base de datos
 
 SP_helpdb paquitabd
 
 
--- Consultar la informaci贸n de los grupos
+-- Consultar la informaci髇 de los grupos
 
 use paquitabd
 go
 SP_helpfilegroup SECUNDARIO
-```
